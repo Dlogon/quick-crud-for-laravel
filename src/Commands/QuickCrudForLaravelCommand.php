@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Dlogon\QuickCrudForLaravel\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class QuickCrudForLaravelCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'quick-crud-for-laravel';
 
     public $description = 'My command';
 
