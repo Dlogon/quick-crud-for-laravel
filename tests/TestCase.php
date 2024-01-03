@@ -2,9 +2,9 @@
 
 namespace Dlogon\QuickCrudForLaravel\Tests;
 
+use Dlogon\QuickCrudForLaravel\QuickCrudForLaravelServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Dlogon\QuickCrudForLaravel\QuickCrudForLaravelServiceProvider;
 
 class TestCase extends Orchestra
 {

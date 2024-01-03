@@ -2,9 +2,9 @@
 
 namespace Dlogon\QuickCrudForLaravel;
 
+use Dlogon\QuickCrudForLaravel\Commands\QuickCrudForLaravelCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Dlogon\QuickCrudForLaravel\Commands\QuickCrudForLaravelCommand;
 
 class QuickCrudForLaravelServiceProvider extends PackageServiceProvider
 {
