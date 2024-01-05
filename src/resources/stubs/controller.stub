@@ -1,0 +1,31 @@
+<?php
+
+namespace DummyNamespace;
+
+use Illuminate\Http\Request;
+use Dlogon\TailwindAlerts\Facades\TailwindAlerts;
+use DummySpaceModel;
+
+class DummyClass extends Controller
+{
+    public $tableFields = DummyFields;
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index($models = null)
+    {
+        $models = DummyModel::orderBy("id")->paginate(10);
+        $fields = $this->tableFields;
+
+        return view(
+            "{{DummyModel}}.index",
+            [
+                "models" => $models,
+                "fields" => $fields,
+            ]
+        );
+    }
+}
