@@ -1,6 +1,8 @@
 {
     "name": "dlogon/quick-crud-for-laravel",
     "description": "Create a crud for model in some steps",
+    "type": "library",
+    "version": "0.1",
     "keywords": [
         "dlogon",
         "laravel",
