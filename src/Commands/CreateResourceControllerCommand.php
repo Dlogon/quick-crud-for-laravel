@@ -28,8 +28,6 @@ class CreateResourceControllerCommand extends BaseClassCommand
         return __DIR__.'/../resources/stubs/controller.stub';
     }
 
-
-
     protected function getDefaultNamespace($rootNamespace)
     {
         return $rootNamespace.'\Http\Controllers';
@@ -42,8 +40,9 @@ class CreateResourceControllerCommand extends BaseClassCommand
         $name = $this->qualifyClass($this->controllerName);
         $path = $this->getPath($name);
 
-        if($this->checkIfFileExist($name))
+        if ($this->checkIfFileExist($name)) {
             return self::FAILURE;
+        }
 
         $this->modelNameSpace = QuickCrudForLaravel::MODEL_NAME_SPACE.$this->modelName;
         $model = new $this->modelNameSpace;
@@ -59,6 +58,7 @@ class CreateResourceControllerCommand extends BaseClassCommand
         $this->files->put($path, $this->buildClass($name));
 
         $this->info($this->type.' created successfully.');
+
         return self::SUCCESS;
     }
 

@@ -22,7 +22,7 @@ class QuickCrudForLaravelServiceProvider extends PackageServiceProvider
             ->hasViews()
             //->hasMigration('create_quick-crud-for-laravel_table')
             ->hasCommands(CreateResourceControllerCommand::class,
-            CreateViewsCommand::class);
+                CreateViewsCommand::class);
 
     }
 }

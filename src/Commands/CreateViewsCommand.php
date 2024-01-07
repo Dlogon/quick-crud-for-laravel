@@ -2,9 +2,7 @@
 
 namespace Dlogon\QuickCrudForLaravel\Commands;
 
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-
 
 class CreateViewsCommand extends BaseClassCommand
 {
@@ -12,13 +10,12 @@ class CreateViewsCommand extends BaseClassCommand
 
     public $description = 'Create the crud views';
 
-
-        /**
+    /**
      * Get the stub file for the generator.
      *
      * @return string
      */
-    protected function getStub() :array
+    protected function getStub(): array
     {
         return [
             'index.blade.php' => __DIR__.'/../resources/stubs/index.stub',
@@ -27,14 +24,13 @@ class CreateViewsCommand extends BaseClassCommand
 
     protected function getPath($name)
     {
-        return resource_path('views/crudable/' . $this->getDirectoryName($name));
+        return resource_path('views/crudable/'.$this->getDirectoryName($name));
     }
 
     protected function getDirectoryName($name)
     {
-        return  Str::lower(Str::camel($name));
+        return Str::lower(Str::camel($name));
     }
-
 
     public function handle(): int
     {
@@ -43,16 +39,16 @@ class CreateViewsCommand extends BaseClassCommand
         $path = $this->getPath($name);
         $stubs = $this->getStub();
 
-        foreach($stubs as $nameView => $stub)
-        {
-            $view = $path . '/' . $nameView;
+        foreach ($stubs as $nameView => $stub) {
+            $view = $path.'/'.$nameView;
             $this->comment($view);
-            if($this->checkIfFileExist($view))
+            if ($this->checkIfFileExist($view)) {
                 continue;
+            }
 
             $this->makeDirectory($view);
             $this->files->put($view, $this->buildView($name, $stub));
-            $this->info($this->type . ' created successfully.');
+            $this->info($this->type.' created successfully.');
         }
 
         return self::SUCCESS;
@@ -62,15 +58,15 @@ class CreateViewsCommand extends BaseClassCommand
     protected function generateClass($name, $stub)
     {
         $stub = $this->files->get($stub);
+
         return $this->replaceNamespace($stub, $name)->replaceClass($stub, $name);
     }
-
 
     protected function buildView($name, $stub)
     {
         $pluramModelName = Str::plural($name);
         $replace = [
-            "DummyModelName" => $pluramModelName
+            'DummyModelName' => $pluramModelName,
         ];
 
         return str_replace(
