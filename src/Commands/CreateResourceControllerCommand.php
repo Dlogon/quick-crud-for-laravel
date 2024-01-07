@@ -3,13 +3,12 @@
 namespace Dlogon\QuickCrudForLaravel\Commands;
 
 use Dlogon\QuickCrudForLaravel\QuickCrudForLaravel;
-use Illuminate\Console\GeneratorCommand;
 
-class QuickCrudForLaravelCommand extends GeneratorCommand
+class CreateResourceControllerCommand extends BaseClassCommand
 {
     public $signature = 'quickcrud:create {name}';
 
-    public $description = 'My command';
+    public $description = 'Create the controller resource command';
 
     protected $fields = [];
 
@@ -29,6 +28,8 @@ class QuickCrudForLaravelCommand extends GeneratorCommand
         return __DIR__.'/../resources/stubs/controller.stub';
     }
 
+
+
     protected function getDefaultNamespace($rootNamespace)
     {
         return $rootNamespace.'\Http\Controllers';
@@ -41,11 +42,8 @@ class QuickCrudForLaravelCommand extends GeneratorCommand
         $name = $this->qualifyClass($this->controllerName);
         $path = $this->getPath($name);
 
-        if ($this->alreadyExists($this->getNameInput())) {
-            $this->error($this->type.' already exists!');
-
-            return false;
-        }
+        if($this->checkIfFileExist($name))
+            return self::FAILURE;
 
         $this->modelNameSpace = QuickCrudForLaravel::MODEL_NAME_SPACE.$this->modelName;
         $model = new $this->modelNameSpace;
@@ -61,7 +59,6 @@ class QuickCrudForLaravelCommand extends GeneratorCommand
         $this->files->put($path, $this->buildClass($name));
 
         $this->info($this->type.' created successfully.');
-
         return self::SUCCESS;
     }
 

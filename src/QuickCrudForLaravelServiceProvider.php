@@ -2,7 +2,8 @@
 
 namespace Dlogon\QuickCrudForLaravel;
 
-use Dlogon\QuickCrudForLaravel\Commands\QuickCrudForLaravelCommand;
+use Dlogon\QuickCrudForLaravel\Commands\CreateResourceControllerCommand;
+use Dlogon\QuickCrudForLaravel\Commands\CreateViewsCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -19,7 +20,9 @@ class QuickCrudForLaravelServiceProvider extends PackageServiceProvider
             ->name('quick-crud-for-laravel')
             ->hasConfigFile()
             ->hasViews()
-            ->hasMigration('create_quick-crud-for-laravel_table')
-            ->hasCommand(QuickCrudForLaravelCommand::class);
+            //->hasMigration('create_quick-crud-for-laravel_table')
+            ->hasCommands(CreateResourceControllerCommand::class,
+            CreateViewsCommand::class);
+
     }
 }
