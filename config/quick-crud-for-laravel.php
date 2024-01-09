@@ -1,6 +1,16 @@
 <?php
 
-// config for Dlogon/QuickCrudForLaravel
 return [
-
+        /*
+    |--------------------------------------------------------------------------
+    | models folder
+    |--------------------------------------------------------------------------
+    |
+    |
+    |
+    */
+    'models_folder' => [
+        "App\\Models\\" => app_path("Models"),
+    ],
+    "route_file_name" => "quickcrud.php",
 ];
