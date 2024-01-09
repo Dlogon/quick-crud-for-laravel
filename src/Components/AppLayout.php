@@ -1,6 +1,7 @@
 <?php
 
 namespace Dlogon\QuickCrudForLaravel\Components;
+
 use Illuminate\View\Component;
 use Illuminate\View\View;
 
@@ -11,6 +12,6 @@ class AppLayout extends Component
      */
     public function render(): View
     {
-        return view("quick-crud-for-laravel::layouts.app");
+        return view('quick-crud-for-laravel::layouts.app');
     }
 }

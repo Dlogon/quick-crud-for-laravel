@@ -7,24 +7,33 @@ use Illuminate\View\Component;
 class Table extends Component
 {
     public $fields;
+
     public $searchFields;
+
     public $models;
+
     public $showButton;
+
     public $editButton;
+
     public $deleteButton;
+
     public $route;
+
     public $modelActions;
+
     public $paginate;
+
     public $actions;
 
     public $isSearch;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct
-    (
+    public function __construct(
         $fields = [],
         $searchFields = [],
         $models = [],
@@ -35,8 +44,7 @@ class Table extends Component
         $modelActions = [],
         $paginate = true,
         $actions = true,
-    )
-    {
+    ) {
         $this->fields = $fields;
         $this->searchFields = $searchFields;
         $this->models = $models;
@@ -52,7 +60,7 @@ class Table extends Component
 
     private function isSearch()
     {
-        return \in_array("search",request()->segments());
+        return \in_array('search', request()->segments());
     }
 
     /**

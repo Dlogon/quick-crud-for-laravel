@@ -1,7 +1,7 @@
 <?php
 
 return [
-        /*
+    /*
     |--------------------------------------------------------------------------
     | models folder
     |--------------------------------------------------------------------------
@@ -10,7 +10,7 @@ return [
     |
     */
     'models_folder' => [
-        "App\\Models\\" => app_path("Models"),
+        'App\\Models\\' => app_path('Models'),
     ],
-    "route_file_name" => "quickcrud.php",
+    'route_file_name' => 'quickcrud.php',
 ];

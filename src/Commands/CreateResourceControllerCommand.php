@@ -5,6 +5,7 @@ namespace Dlogon\QuickCrudForLaravel\Commands;
 use Dlogon\QuickCrudForLaravel\QuickCrudForLaravel;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
+
 class CreateResourceControllerCommand extends BaseClassCommand
 {
     public $signature = 'quickcrud:create {name}';
@@ -82,7 +83,7 @@ class CreateResourceControllerCommand extends BaseClassCommand
             'DummyFields' => \var_export($this->fields, true),
             'DummyModel' => $this->modelName,
             'DummySpaceModel' => $this->modelNameSpace,
-            'Dummyfolder' => CreateViewsCommand::getDirectoryName($this->modelName)
+            'Dummyfolder' => CreateViewsCommand::getDirectoryName($this->modelName),
         ]);
 
         return str_replace(
@@ -96,20 +97,19 @@ class CreateResourceControllerCommand extends BaseClassCommand
     {
         $controllerNamespace = $this->getNamespace($name);
         $files = new Filesystem;
-        $fileRouteName = config("quick-crud-for-laravel.route_file_name");
+        $fileRouteName = config('quick-crud-for-laravel.route_file_name');
         $files->ensureDirectoryExists(\base_path('routes'));
         $filePath = base_path("routes/$fileRouteName");
         $pluramModelName = Str::lower(Str::plural($this->modelName));
-        $fullControllerNameSpace = $controllerNamespace."\\".$this->controllerName;
+        $fullControllerNameSpace = $controllerNamespace.'\\'.$this->controllerName;
 
-        if(!$files->exists($filePath))
-        {
-            $files->copy(__DIR__."/../resources/stubs/routes.stub", $filePath);
-            $this->info("Routes file created!");
+        if (! $files->exists($filePath)) {
+            $files->copy(__DIR__.'/../resources/stubs/routes.stub', $filePath);
+            $this->info('Routes file created!');
         }
 
         //$files->append($filePath, "use ".$this->getNamespace($name).";\n");
         $files->append($filePath, "Route::resource('$pluramModelName', $fullControllerNameSpace::class);");
-        $this->info("Routes file updated!");
+        $this->info('Routes file updated!');
     }
 }

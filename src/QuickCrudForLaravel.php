@@ -23,16 +23,16 @@ class QuickCrudForLaravel
     public static function getModelNames(): array
     {
         $models = [];
-        $modelsPaths = config("traslations.models_folder", ["App\\Models\\" => app_path('Models')]);
+        $modelsPaths = config('traslations.models_folder', ['App\\Models\\' => app_path('Models')]);
 
-        foreach($modelsPaths as $namespace => $path)
-        {
+        foreach ($modelsPaths as $namespace => $path) {
             $modelFiles = File::allFiles($path);
             foreach ($modelFiles as $modelFile) {
                 $modelName = $modelFile->getFilenameWithoutExtension();
-                $models[] =  $modelName;
+                $models[] = $modelName;
             }
         }
+
         return $models;
     }
 

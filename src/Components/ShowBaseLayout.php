@@ -4,14 +4,16 @@ namespace App\View\Components;
 
 use App\Helpers\RequestHelpers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use Illuminate\View\Component;
 
 class ShowBaseLayout extends Component
 {
     public $nextRecord;
+
     public $previousRecord;
-    public $routeNamme = "";
+
+    public $routeNamme = '';
+
     /**
      * Create a new component instance.
      *

@@ -10,21 +10,23 @@ use Illuminate\View\Component;
 class BaseShow extends Component
 {
     public $header;
+
     public $fields;
+
     public BaseModel $model;
+
     public $chunkedFields;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct
-    (
+    public function __construct(
         BaseModel $model,
-        $header = "",
+        $header = '',
         $fields = []
-    )
-    {
+    ) {
         $this->header = $header;
         $this->fields = $fields;
         $this->model = $model;
