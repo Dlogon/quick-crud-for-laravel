@@ -1,18 +1,22 @@
-<x-app-layout>
+<x-dlogon-quickcrud-app-layout>
     <x-slot name="header">
-        <x-table-crud-header header="DummyModelName" createRoute="DummyModelName.create" creteButtonText="Create DummyModelName"></x-table-crud-header>
+        <x-quick-crud-for-laravel::table-crud-header
+        header="DummyModelName"
+        createRoute="DummyModelName.create"
+        creteButtonText="Create DummyModelName">
+        </x-quick-crud-for-laravel::table-crud-header>
     </x-slot>
 
     <div class="bg-gray-200 border border-gray-800 rounded shadow p-2">
         <div class="items-center">
-            <x-table
+            <x-dlogon-quickcrud-table
                 :fields="$fields"
                 deleteButton="true"
                 :models="$models"
                 route="DummyModelName"
                 :searchFields="$searchFields"
             >
-            </x-table>
+            </x-dlogon-quickcrud-table>
         </div>
     </div>
-</x-app-layout>
+</x-dlogon-quickcrud-app-layout>

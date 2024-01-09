@@ -24,10 +24,10 @@ class CreateViewsCommand extends BaseClassCommand
 
     protected function getPath($name)
     {
-        return resource_path('views/crudable/'.$this->getDirectoryName($name));
+        return resource_path('views/crudable/'.self::getDirectoryName($name));
     }
 
-    protected function getDirectoryName($name)
+    public static function getDirectoryName($name)
     {
         return Str::lower(Str::camel($name));
     }
@@ -64,7 +64,7 @@ class CreateViewsCommand extends BaseClassCommand
 
     protected function buildView($name, $stub)
     {
-        $pluramModelName = Str::plural($name);
+        $pluramModelName = Str::lower(Str::plural($name));
         $replace = [
             'DummyModelName' => $pluramModelName,
         ];
