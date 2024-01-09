@@ -10,6 +10,7 @@ class DummyClass extends Controller
 {
     public $tableFields = DummyFields;
 
+    public $searchFields = [];
     /**
      * Display a listing of the resource.
      *
@@ -19,12 +20,13 @@ class DummyClass extends Controller
     {
         $models = DummyModel::orderBy("id")->paginate(10);
         $fields = $this->tableFields;
-
+        $searchFields = $this->searchFields;
         return view(
-            "{{DummyModel}}.index",
+            "crudable.Dummyfolder.index",
             [
                 "models" => $models,
                 "fields" => $fields,
+                "searchFields" => $searchFields
             ]
         );
     }
