@@ -2,6 +2,7 @@
 
 namespace Dlogon\QuickCrudForLaravel;
 
+use Dlogon\QuickCrudForLaravel\Commands\CreateAllCommand;
 use Dlogon\QuickCrudForLaravel\Commands\CreateResourceControllerCommand;
 use Dlogon\QuickCrudForLaravel\Commands\CreateViewsCommand;
 use Dlogon\QuickCrudForLaravel\Components\AppLayout;
@@ -25,7 +26,7 @@ class QuickCrudForLaravelServiceProvider extends PackageServiceProvider
             ->hasViews()
             //->hasMigration('create_quick-crud-for-laravel_table')
             ->hasCommands(CreateResourceControllerCommand::class,
-                CreateViewsCommand::class)
+                CreateViewsCommand::class, CreateAllCommand::class)
             ->hasViewComponent('dlogon-quickcrud', AppLayout::class)
             ->hasViewComponent('dlogon-quickcrud', Table::class)
             ->hasViewComponent('dlogon-quickcrud', Navigation::class);
