@@ -2,7 +2,6 @@
 
 namespace Dlogon\QuickCrudForLaravel\Commands;
 
-use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 
 class CreateAllCommand extends BaseClassCommand
@@ -16,15 +15,15 @@ class CreateAllCommand extends BaseClassCommand
         $this->comment('Building things');
         $name = $this->getNameInput();
 
-        Artisan::call("quickcrud:create" , ["name" => $name]);
-        Artisan::call("quickcrud:views" , ["name" => $name]);
+        Artisan::call('quickcrud:create', ['name' => $name]);
+        Artisan::call('quickcrud:views', ['name' => $name]);
+
         return self::SUCCESS;
 
     }
 
     protected function getStub()
     {
-        return;
-    }
 
+    }
 }
