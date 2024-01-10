@@ -11,7 +11,7 @@ trait NavigationUtils
 {
     public function getRelatedModelProperty(string $dotRelatedField)
     {
-        return Arr::get($this, $dotRelatedField, "");
+        return Arr::get($this, $dotRelatedField, '');
     }
 
     public function getNextRecordAttribute()
@@ -27,11 +27,11 @@ trait NavigationUtils
     public function callFunctionFromRelatedCollection($related, $function)
     {
         $collection = $this->getRelatedModelProperty($related);
-       // return $collection;
+
+        // return $collection;
         return call_user_func_array([
             $collection,
-            $function
+            $function,
         ], []);
     }
 }
-

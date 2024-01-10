@@ -10,16 +10,18 @@ class RequestHelpers
     public static function getModelFromShowView(Request $request)
     {
         $modelParameterName = $request->route()->parameterNames()[0];
+
         return $request->$modelParameterName ?? null;
     }
 
-    public static function findModel(Request $request) : Model|null
+    public static function findModel(Request $request): ?Model
     {
-        foreach($request->route()->parameters() as $param)
-        {
-            if($param instanceof Model)
+        foreach ($request->route()->parameters() as $param) {
+            if ($param instanceof Model) {
                 return $param;
+            }
         }
+
         return null;
     }
 }
