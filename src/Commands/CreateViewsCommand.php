@@ -19,6 +19,7 @@ class CreateViewsCommand extends BaseClassCommand
     {
         return [
             'index.blade.php' => __DIR__.'/../resources/stubs/index.stub',
+            'show.blade.php' => __DIR__.'/../resources/stubs/show.stub',
         ];
     }
 

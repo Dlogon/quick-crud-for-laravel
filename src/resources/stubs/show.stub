@@ -1,0 +1,12 @@
+<x-quick-crud-for-laravel-show-base-layout>
+    <x-slot name="header">
+        {{$model->id}}
+    </x-slot>
+
+    <x-quick-crud-for-laravel-base-show
+        :fields="$fields"
+        :model="$model"
+    ></x-quick-crud-for-laravel-base-show>
+
+
+</x-quick-crud-for-laravel-show-base-layout>

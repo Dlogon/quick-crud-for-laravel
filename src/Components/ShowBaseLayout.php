@@ -1,8 +1,8 @@
 <?php
 
-namespace App\View\Components;
+namespace Dlogon\QuickCrudForLaravel\Components;
 
-use App\Helpers\RequestHelpers;
+use Dlogon\QuickCrudForLaravel\Helpers\RequestHelpers;
 use Illuminate\Http\Request;
 use Illuminate\View\Component;
 
@@ -36,6 +36,6 @@ class ShowBaseLayout extends Component
     public function render()
     {
         //dd(\request());
-        return view('layouts.base-show');
+        return view('quick-crud-for-laravel::layouts.base-show');
     }
 }

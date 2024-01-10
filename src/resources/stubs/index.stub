@@ -1,4 +1,4 @@
-<x-dlogon-quickcrud-app-layout>
+<x-quick-crud-for-laravel-app-layout>
     <x-slot name="header">
         <x-quick-crud-for-laravel::table-crud-header
         header="DummyModelName"
@@ -9,14 +9,14 @@
 
     <div class="bg-gray-200 border border-gray-800 rounded shadow p-2">
         <div class="items-center">
-            <x-dlogon-quickcrud-table
+            <x-quick-crud-for-laravel-table
                 :fields="$fields"
                 deleteButton="true"
                 :models="$models"
                 route="DummyModelName"
                 :searchFields="$searchFields"
             >
-            </x-dlogon-quickcrud-table>
+            </x-quick-crud-for-laravel-table>
         </div>
     </div>
-</x-dlogon-quickcrud-app-layout>
+</x-quick-crud-for-laravel-app-layout>

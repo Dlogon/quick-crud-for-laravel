@@ -30,4 +30,23 @@ class DummyClass extends Controller
             ]
         );
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\DummyModel  $model
+     * @return \Illuminate\Http\Response
+     */
+    public function show(DummyModel $Dummyfolder)
+    {
+        $fields = $this->tableFields;
+
+        return view(
+            "crudable.Dummyfolder.show",
+            [
+                "model" => $Dummyfolder,
+                "fields" => $fields
+            ]
+        );
+    }
 }

@@ -1,10 +1,9 @@
 <?php
 
-namespace App\View\Components;
+namespace Dlogon\QuickCrudForLaravel\Components;
 
-use App\Models\BaseModel;
-use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\View\Component;
 
 class BaseShow extends Component
@@ -13,7 +12,7 @@ class BaseShow extends Component
 
     public $fields;
 
-    public BaseModel $model;
+    public Model $model;
 
     public $chunkedFields;
 
@@ -23,7 +22,7 @@ class BaseShow extends Component
      * @return void
      */
     public function __construct(
-        BaseModel $model,
+        Model $model,
         $header = '',
         $fields = []
     ) {
@@ -36,8 +35,8 @@ class BaseShow extends Component
     /**
      * Get the view / contents that represent the component.
      */
-    public function render(): View|Closure|string
+    public function render(): View
     {
-        return view('components.base-show');
+        return view('quick-crud-for-laravel::components.base-show');
     }
 }
