@@ -20,15 +20,16 @@ class DummyClass extends Controller
     */
 
     public $searchFields = [
+            "created_at" => [
+            "type" => "singleDate", // search by date
+            "label" => "Creation date",
+        ],
         /*
         "fieldName" =>[
             "type" => "text" // search by text
             "placeholder" => "my search"
         ]
-        "created_at" => [
-                "type" => "singleDate", // search by date
-                "label" => "creation date",
-        ],
+
         "customer_id" => [
                 "type" => "related", // search by related model
                 "elements" => $allCustomers, //<- this will populate a select dropdown
@@ -83,5 +84,18 @@ class DummyClass extends Controller
                 "fields" => $fields
             ]
         );
+    }
+
+        /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Customer  $customer
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(DummyModel $Dummyfolder)
+    {
+        $Dummyfolder->delete();
+        TailwindAlerts::addBottomToastMessage("Deleted", TailwindAlerts::ERROR);
+        return redirect()->route("Dummyfolders.index");
     }
 }
