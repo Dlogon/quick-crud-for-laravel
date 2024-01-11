@@ -15,7 +15,7 @@
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-slate-500">
-            <x-dlogon-quickcrud-navigation></x-dlogon-quickcrud-navigation>
+            <x-quick-crud-for-laravel-navigation></x-quick-crud-for-laravel-navigation>
             <!-- Page Heading -->
             @if (isset($header))
                 <header class="bg-slate-200 shadow">
@@ -76,9 +76,9 @@
                     <!--Footer-->
                     <div class="flex justify-end pt-2">
                         <button type="submit"
-                            class="px-4 bg-transparent p-3 rounded-lg text-indigo-500 hover:bg-gray-100 hover:text-indigo-400 mr-2">Borrar</button>
+                            class="px-4 bg-transparent p-3 rounded-lg text-indigo-500 hover:bg-gray-100 hover:text-indigo-400 mr-2">Delete</button>
                         <button type="button"
-                            class="modal-close px-4 bg-blue-500 p-3 rounded-lg text-white hover:bg-indigo-400">Cerrar</button>
+                            class="modal-close px-4 bg-blue-500 p-3 rounded-lg text-white hover:bg-indigo-400">Close</button>
                     </div>
                 </form>
 
@@ -107,7 +107,7 @@
                     var deleteModalForm = document.getElementById("modal-form-delete");
                     deleteModalForm.action = deleteRoute;
                     deleteModalForm.querySelector("#modalBody").innerHTML =
-                        "Seguro que desea eliminar el registro " + modelId
+                        "Are you sure you want to delete the register with id " + modelId
                 })
             }
         }
