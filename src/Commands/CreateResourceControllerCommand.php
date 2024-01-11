@@ -108,8 +108,10 @@ class CreateResourceControllerCommand extends BaseClassCommand
             $this->info('Routes file created!');
         }
 
-        //$files->append($filePath, "use ".$this->getNamespace($name).";\n");
-        $files->append($filePath, "Route::resource('$pluramModelName', $fullControllerNameSpace::class);");
+        //Search route
+        $files->append($filePath, "Route::get('$pluramModelName/search', [$fullControllerNameSpace::class , 'search']);\n");
+        $files->append($filePath, "Route::resource('$pluramModelName', $fullControllerNameSpace::class);\n");
+
         $this->info('Routes file updated!');
     }
 }
