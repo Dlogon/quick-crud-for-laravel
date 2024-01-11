@@ -46,7 +46,7 @@ class CreateResourceControllerCommand extends BaseClassCommand
             return self::FAILURE;
         }
 
-        $this->modelNameSpace = QuickCrudForLaravel::MODEL_NAME_SPACE.$this->modelName;
+        $this->modelNameSpace = "App\\Models\\".$this->modelName;
         $model = new $this->modelNameSpace;
         $columns = QuickCrudForLaravel::describeModel($model);
         $columns = \array_combine(\array_values($columns), \array_values($columns));
