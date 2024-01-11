@@ -5,15 +5,7 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/dlogon/quick-crud-for-laravel/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/dlogon/quick-crud-for-laravel/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/dlogon/quick-crud-for-laravel.svg?style=flat-square)](https://packagist.org/packages/dlogon/quick-crud-for-laravel)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
-
-## Support us
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/quick-crud-for-laravel.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/quick-crud-for-laravel)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+Create a Crud for model in some steps
 
 ## Installation
 
@@ -21,13 +13,6 @@ You can install the package via composer:
 
 ```bash
 composer require dlogon/quick-crud-for-laravel
-```
-
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="quick-crud-for-laravel-migrations"
-php artisan migrate
 ```
 
 You can publish the config file with:
@@ -39,8 +24,23 @@ php artisan vendor:publish --tag="quick-crud-for-laravel-config"
 This is the contents of the published config file:
 
 ```php
+<?php
+
 return [
+    /*
+    |--------------------------------------------------------------------------
+    | models folder
+    |--------------------------------------------------------------------------
+    |
+    |
+    |
+    */
+    'models_folder' => [
+        'App\\Models\\' => app_path('Models'),
+    ],
+    'route_file_name' => 'quickcrud.php',
 ];
+
 ```
 
 Optionally, you can publish the views using
@@ -51,16 +51,257 @@ php artisan vendor:publish --tag="quick-crud-for-laravel-views"
 
 ## Usage
 
-```php
-$quickCrudForLaravel = new Dlogon\QuickCrudForLaravel();
-echo $quickCrudForLaravel->echoPhrase('Hello, Dlogon!');
-```
-
-## Testing
-
+Once you have created your model and running the migrations, you can run the command
 ```bash
-composer test
+php artisan quickcrud:all <your-model-name>
 ```
+This will create:
+
+-A Controller named \<your model name\>Controller
+
+-A view named index inside views/crudable/\<your model in lower case\>/index.blade.php
+
+-A view named show inside views/crudable/\<your model in lower case\>/show.blade.php
+
+-A route file named quickcrud.php
+
+Then you should add the trait ```Dlogon\QuickCrudForLaravel\Traits\NavigationUtils;```
+to your model, for example:
+
+```php
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Dlogon\QuickCrudForLaravel\Traits\NavigationUtils;
+
+class Blog extends Model
+{
+    use HasFactory;
+    use NavigationUtils;
+}
+```
+
+Then you should include the quickcrud.php file in your web.php route file, o copy the generated routes in web.php
+
+```php
+<?php
+
+use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+include __DIR__.'/quickcrud.php';
+```
+
+With this steps, you are now able to navigate to yourhost/\<your model name in lower and plural>
+and see the index view with a table with search, and buttons to do operations with your model
+
+Example:
+
+We generate the Blog model with this migration
+```php
+public function up(): void
+    {
+        Schema::create('blogs', function (Blueprint $table) {
+            $table->id();
+            $table->string("name");
+            $table->string("content");
+            $table->timestamps();
+        });
+    }
+```
+
+Then we run the migrations, and we run 
+```bash
+php artisan quickcrud:all Blog
+```
+
+this will create the next controller in the controller folder
+```php
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Dlogon\TailwindAlerts\Facades\TailwindAlerts;
+use Dlogon\QuickCrudForLaravel\Helpers\Search;
+use App\Models\Blog;
+
+class BlogController extends Controller
+{
+    public $tableFields = array (
+  'id' => 'id',
+  'name' => 'name',
+  'content' => 'content',
+  'created_at' => 'created_at',
+  'updated_at' => 'updated_at',
+);
+
+    /*
+    [
+        "label" => "tablefieldName",
+        'label' => ["type" => "related", "field" =>"relationName.fieldNameOfRelatedModel"],
+        'label' => ["type"=>"money", "field"=>'moneyOrDecimalField']
+    ]
+    */
+
+    public $searchFields = [
+            "created_at" => [
+            "type" => "singleDate", // search by date
+            "label" => "Creation date",
+        ],
+        /*
+        "fieldName" =>[
+            "type" => "text" // search by text
+            "placeholder" => "my search"
+        ]
+
+        "customer_id" => [
+                "type" => "related", // search by related model
+                "elements" => $allCustomers, //<- this will populate a select dropdown
+                "modelDisplay" => "name",
+                "label" => "Cliente", <--what show to
+                "value" => "id" <-- what find to
+            ]
+        */
+    ];
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index($models = null)
+    {
+        $models = $models ?? Blog::orderBy("id")->paginate(10);
+        $fields = $this->tableFields;
+        $searchFields = $this->searchFields;
+        return view(
+            "crudable.blog.index",
+            [
+                "models" => $models,
+                "fields" => $fields,
+                "searchFields" => $searchFields
+            ]
+        );
+    }
+
+    public function search(Request $request)
+    {
+        $models = Blog::query();
+        if ($request->has('q'))
+            $models = Search::searchByQueryParams(new Blog, $request)->get();
+        return $this->index($models);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Blog  $model
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Blog $blog)
+    {
+        $fields = $this->tableFields;
+
+        return view(
+            "crudable.blog.show",
+            [
+                "model" => $blog,
+                "fields" => $fields
+            ]
+        );
+    }
+
+        /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Customer  $customer
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Blog $blog)
+    {
+        $blog->delete();
+        TailwindAlerts::addBottomToastMessage("Deleted", TailwindAlerts::ERROR);
+        return redirect()->route("blogs.index");
+    }
+}
+```
+and the index and show views.
+
+### table fields
+
+The ```$tablefields``` controller variable has 2 options
+```["label" => "column"]``` or ```["label" => []]```
+if you put and array, you should put a type and the field
+the type can be set as related and money.
+
+If you set the type as related, you should put in field ```relationName.fieldName``` where fieldName is the column name in the related model
+
+If you set the type as money, you should put the numeric field in the field key of array
+
+### search fields
+
+By default the variable controller ```$searchfields``` has the created_at field for search, you can define the next 3 structures for a search field
+
+#### Text
+
+```php
+    "fieldName" =>[
+                "type" => "text" 
+                "placeholder" => "my search"
+            ]
+```
+where 
+- fieldName: is the column name in your model
+- type: the type of search defined as text
+- placeholder: What to display in the text input
+
+#### Date
+```php
+    "fieldName" =>[
+                "type" => "singleDate" 
+                "label" => "my date"
+            ]
+```
+where 
+- fieldName: is the datetime column  name in your model
+- type: the type of date 
+- label: is what the label show aside the input date
+
+#### Related
+
+This will show a dropdown for a seach of related models
+```php
+    "fieldName" => [
+                    "type" => "related", 
+                    "elements" => $models, 
+                    "modelDisplay" => "name",
+                    "label" => "Comments",
+                    "value" => "id" 
+                ]
+                
+```
+where 
+- fieldName: the foreign key contained in your current model
+- type: the type of related 
+- elements: the related models for a search, for example if you generate a Invoice quickcrud, and you want to search the invoices related to costumer, you should put here Customer::all()
+- modelDisplay: what field of the related model you want to display
+- label: is what the label show aside the input dropdown
+- value: the related column in the related model search for
 
 ## Changelog
 
