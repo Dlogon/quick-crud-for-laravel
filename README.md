@@ -7,6 +7,11 @@
 
 Create a Crud for model in some steps
 
+### Requirements
+
+This package uses TailwindCSS (https://tailwindcss.com/) for styling. It uses some of the base laravel breeze/jetstream components and styles.
+
+
 ## Installation
 
 You can install the package via composer:
