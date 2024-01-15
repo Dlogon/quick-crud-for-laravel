@@ -115,7 +115,7 @@ include __DIR__.'/quickcrud.php';
 With this steps, you are now able to navigate to yourhost/\<your model name in lower and plural>
 and see the index view with a table with search, and buttons to do operations with your model
 
-Example:
+### Example:
 
 We generate the Blog model with this migration
 ```php
@@ -249,15 +249,34 @@ and the index and show views.
 
 ### table fields
 
-The ```$tablefields``` controller variable has 2 options
-```["label" => "column"]``` or ```["label" => []]```
-if you put and array, you should put a type and the field
-the type can be set as related and money.
+We have a ```table``` component inside the recent created index view, connected to the ```$tablefields``` controller variable.
+
+We should pass an asoc array with the key as the label column displayed in the table component and the value as the column name in our database model.
+
+##### Example:
+```php
+    ["Creation date" => "created_at"]
+```
+
+
+You can alternatively pass an array instead the database-model-column, if you do this, 
+you should pass the type and field structure.
+```php
+    ['label' => ["type" => "related|money", "field" =>"relationName.fieldNameOfRelatedModel|numericMoneyField"]],
+```
 
 If you set the type as related, you should put in field ```relationName.fieldName``` where fieldName is the column name in the related model
 
-If you set the type as money, you should put the numeric field in the field key of array
+##### Example:
+```php
+['Post title' => ["type" => "related", "field" =>"post.title"]],
+```
 
+If you set the type as money, you should put the numeric field in the field key of array
+##### Example:
+```php
+['Price' => ["type" => "money", "field" =>"price"]],
+```
 ### search fields
 
 By default the variable controller ```$searchfields``` has the created_at field for search, you can define the next 3 structures for a search field
