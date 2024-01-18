@@ -4,6 +4,7 @@ namespace Dlogon\QuickCrudForLaravel\Tests;
 
 use Dlogon\QuickCrudForLaravel\QuickCrudForLaravelServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
@@ -12,9 +13,9 @@ class TestCase extends Orchestra
     {
         parent::setUp();
 
-        Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Dlogon\\QuickCrudForLaravel\\Database\\Factories\\'.class_basename($modelName).'Factory'
-        );
+        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+        $this->artisan('migrate', ['--database' => 'testbench'])->run();
+        $this->seed();
     }
 
     protected function getPackageProviders($app)
@@ -26,11 +27,13 @@ class TestCase extends Orchestra
 
     public function getEnvironmentSetUp($app)
     {
-        config()->set('database.default', 'testing');
-
-        /*
-        $migration = include __DIR__.'/../database/migrations/create_quick-crud-for-laravel_table.php.stub';
-        $migration->up();
-        */
+        $app['config']->set('database.default', 'testbench');
+        $app['config']->set('database.connections.testbench', [
+            'driver'   => 'sqlite',
+            'database' => ':memory:',
+            'prefix'   => '',
+        ]);
     }
+
+
 }
