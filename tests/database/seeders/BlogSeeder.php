@@ -3,7 +3,6 @@
 namespace Dlogon\QuickCrudForLaravel\Tests\Database\Seeders;
 
 use Dlogon\QuickCrudForLaravel\Tests\Models\Blog;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class BlogSeeder extends Seeder
