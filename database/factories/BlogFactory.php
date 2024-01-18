@@ -1,7 +1,8 @@
 <?php
 
-namespace Database\Factories;
+namespace Dlogon\QuickCrudForLaravel\Database\Factories;
 
+use Dlogon\QuickCrudForLaravel\Models\Blog;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -14,6 +15,8 @@ class BlogFactory extends Factory
      *
      * @return array<string, mixed>
      */
+
+    protected $model = Blog::class;
     public function definition(): array
     {
         return [

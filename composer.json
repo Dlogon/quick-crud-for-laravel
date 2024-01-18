@@ -39,7 +39,9 @@
     "autoload": {
         "psr-4": {
             "Dlogon\\QuickCrudForLaravel\\": "src/",
-            "Dlogon\\QuickCrudForLaravel\\Database\\Factories\\": "database/factories/"
+            "Dlogon\\QuickCrudForLaravel\\Database\\Factories\\": "database/factories/",
+            "Dlogon\\QuickCrudForLaravel\\Database\\Seeders\\": "database/seeders/"
+
         }
     },
     "autoload-dev": {
