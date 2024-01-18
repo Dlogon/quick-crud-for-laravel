@@ -32,4 +32,9 @@ class TestCase extends Orchestra
             'prefix' => '',
         ]);
     }
+
+    public function test_that_true_is_true(): void
+    {
+        $this->assertTrue(true);
+    }
 }
