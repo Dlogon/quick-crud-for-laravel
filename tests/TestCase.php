@@ -3,6 +3,7 @@
 namespace Dlogon\QuickCrudForLaravel\Tests;
 
 use Dlogon\QuickCrudForLaravel\QuickCrudForLaravelServiceProvider;
+use Dlogon\QuickCrudForLaravel\Database\Seeders\DatabaseSeeder;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
@@ -11,9 +12,9 @@ class TestCase extends Orchestra
     {
         parent::setUp();
 
-        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->artisan('migrate', ['--database' => 'testbench'])->run();
-        $this->seed();
+        $this->seed(DatabaseSeeder::class);
     }
 
     protected function getPackageProviders($app)
