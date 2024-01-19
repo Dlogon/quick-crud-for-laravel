@@ -2,8 +2,9 @@
 
 namespace Dlogon\QuickCrudForLaravel\Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use Dlogon\QuickCrudForLaravel\Models\Blog;
+use Illuminate\Database\Seeder;
+
 class BlogSeeder extends Seeder
 {
     /**
@@ -13,8 +14,8 @@ class BlogSeeder extends Seeder
     {
         Blog::factory()->count(10)->create();
         Blog::factory()->count(1)->create([
-            "name" => "dlogon",
-            "content" => "Hello from quick-crud"
+            'name' => 'dlogon',
+            'content' => 'Hello from quick-crud',
         ]);
     }
 }

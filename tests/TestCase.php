@@ -2,8 +2,8 @@
 
 namespace Dlogon\QuickCrudForLaravel\Tests;
 
-use Dlogon\QuickCrudForLaravel\QuickCrudForLaravelServiceProvider;
 use Dlogon\QuickCrudForLaravel\Database\Seeders\DatabaseSeeder;
+use Dlogon\QuickCrudForLaravel\QuickCrudForLaravelServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
