@@ -3,7 +3,6 @@
 namespace Dlogon\QuickCrudForLaravel\Commands;
 
 use Exception;
-use Illuminate\Support\Facades\Artisan;
 
 class CreateAllCommand extends BaseClassCommand
 {
@@ -18,12 +17,12 @@ class CreateAllCommand extends BaseClassCommand
             $name = $this->getNameInput();
             $modelNameSpaceProvided = $this->argument('nameSpace');
 
-            $this->call('quickcrud:create', ['name' => $name, "nameSpace" => $modelNameSpaceProvided]);
+            $this->call('quickcrud:create', ['name' => $name, 'nameSpace' => $modelNameSpaceProvided]);
             $this->call('quickcrud:views', ['name' => $name]);
 
             return self::SUCCESS;
         } catch (Exception $e) {
-            $this->warn("error creating files");
+            $this->warn('error creating files');
         }
     }
 

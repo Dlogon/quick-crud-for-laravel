@@ -29,28 +29,29 @@ class CreateResourceControllerCommand extends BaseClassCommand
      */
     protected function getStub()
     {
-        return __DIR__ . '/../resources/stubs/controller.stub';
+        return __DIR__.'/../resources/stubs/controller.stub';
     }
 
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace . '\Http\Controllers';
+        return $rootNamespace.'\Http\Controllers';
     }
 
     public function handle(): int
     {
         $this->modelName = $this->getNameInput();
-        $this->controllerName = $this->modelName . 'Controller';
+        $this->controllerName = $this->modelName.'Controller';
         $name = $this->qualifyClass($this->controllerName);
         $path = $this->getPath($name);
         $modelNameSpaceProvided = $this->argument('nameSpace');
 
         if ($this->checkIfFileExist($name)) {
             $this->error("Controller $name aleady exists");
+
             return self::FAILURE;
         }
 
-        $this->modelNameSpace = $modelNameSpaceProvided .  $this->modelName;
+        $this->modelNameSpace = $modelNameSpaceProvided.$this->modelName;
         $model = new $this->modelNameSpace;
         $columns = QuickCrudForLaravel::describeModel($model);
         $columns = \array_combine(\array_values($columns), \array_values($columns));
@@ -63,7 +64,7 @@ class CreateResourceControllerCommand extends BaseClassCommand
         $this->makeDirectory($path);
         $this->files->put($path, $this->buildClass($name));
 
-        $this->info($this->type . ' created successfully.');
+        $this->info($this->type.' created successfully.');
 
         $this->createOrUpdateRoutesCommand($name);
 
@@ -105,10 +106,10 @@ class CreateResourceControllerCommand extends BaseClassCommand
         $files->ensureDirectoryExists(\base_path('routes'));
         $filePath = base_path("routes/$fileRouteName");
         $pluramModelName = Str::lower(Str::plural($this->modelName));
-        $fullControllerNameSpace = $controllerNamespace . '\\' . $this->controllerName;
+        $fullControllerNameSpace = $controllerNamespace.'\\'.$this->controllerName;
 
-        if (!$files->exists($filePath)) {
-            $files->copy(__DIR__ . '/../resources/stubs/routes.stub', $filePath);
+        if (! $files->exists($filePath)) {
+            $files->copy(__DIR__.'/../resources/stubs/routes.stub', $filePath);
             $this->info('Routes file created!');
         }
 
