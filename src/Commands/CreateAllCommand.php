@@ -2,28 +2,32 @@
 
 namespace Dlogon\QuickCrudForLaravel\Commands;
 
+use Exception;
 use Illuminate\Support\Facades\Artisan;
 
 class CreateAllCommand extends BaseClassCommand
 {
-    public $signature = 'quickcrud:all {name}';
+    public $signature = 'quickcrud:all {name} {nameSpace=App\Models\}';
 
     public $description = 'Create views and controller of model';
 
     public function handle(): int
     {
-        $this->comment('Building things');
-        $name = $this->getNameInput();
+        try {
+            $this->comment('Building things');
+            $name = $this->getNameInput();
+            $modelNameSpaceProvided = $this->argument('nameSpace');
 
-        Artisan::call('quickcrud:create', ['name' => $name]);
-        Artisan::call('quickcrud:views', ['name' => $name]);
+            $this->call('quickcrud:create', ['name' => $name, "nameSpace" => $modelNameSpaceProvided]);
+            $this->call('quickcrud:views', ['name' => $name]);
 
-        return self::SUCCESS;
-
+            return self::SUCCESS;
+        } catch (Exception $e) {
+            $this->warn("error creating files");
+        }
     }
 
     protected function getStub()
     {
-
     }
 }

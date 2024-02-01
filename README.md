@@ -11,7 +11,6 @@ Create a Crud for model in some steps
 
 This package uses TailwindCSS (https://tailwindcss.com/) for styling. It uses some of the base laravel breeze/jetstream components and styles.
 
-
 ## Installation
 
 You can install the package via composer:
@@ -57,9 +56,11 @@ php artisan vendor:publish --tag="quick-crud-for-laravel-views"
 ## Usage
 
 Once you have created your model and running the migrations, you can run the command
+
 ```bash
 php artisan quickcrud:all <your-model-name>
 ```
+
 This will create:
 
 -A Controller named \<your model name\>Controller
@@ -70,7 +71,7 @@ This will create:
 
 -A route file named quickcrud.php
 
-Then you should add the trait ```Dlogon\QuickCrudForLaravel\Traits\NavigationUtils;```
+Then you should add the trait `Dlogon\QuickCrudForLaravel\Traits\NavigationUtils;`
 to your model, for example:
 
 ```php
@@ -115,9 +116,17 @@ include __DIR__.'/quickcrud.php';
 With this steps, you are now able to navigate to yourhost/\<your model name in lower and plural>
 and see the index view with a table with search, and buttons to do operations with your model
 
+If your model is in another namespace than the default `App/Models/` you can pass a second argument with the namespace
+
+```bash
+php artisan quickcrud:all artisan quickcrud:all Test1 App\\Models\\deep\\
+
+```
+
 ### Example:
 
 We generate the Blog model with this migration
+
 ```php
 public function up(): void
     {
@@ -130,12 +139,14 @@ public function up(): void
     }
 ```
 
-Then we run the migrations, and we run 
+Then we run the migrations, and we run
+
 ```bash
 php artisan quickcrud:all Blog
 ```
 
 this will create the next controller in the controller folder
+
 ```php
 <?php
 
@@ -245,87 +256,101 @@ class BlogController extends Controller
     }
 }
 ```
+
 and the index and show views.
 
 ### table fields
 
-We have a ```table``` component inside the recent created index view, connected to the ```$tablefields``` controller variable.
+We have a `table` component inside the recent created index view, connected to the `$tablefields` controller variable.
 
 We should pass an asoc array with the key as the label column displayed in the table component and the value as the column name in our database model.
 
 ##### Example:
+
 ```php
     ["Creation date" => "created_at"]
 ```
 
-
-You can alternatively pass an array instead the database-model-column, if you do this, 
+You can alternatively pass an array instead the database-model-column, if you do this,
 you should pass the type and field structure.
+
 ```php
     ['label' => ["type" => "related|money", "field" =>"relationName.fieldNameOfRelatedModel|numericMoneyField"]],
 ```
 
-If you set the type as related, you should put in field ```relationName.fieldName``` where fieldName is the column name in the related model
+If you set the type as related, you should put in field `relationName.fieldName` where fieldName is the column name in the related model
 
 ##### Example:
+
 ```php
 ['Post title' => ["type" => "related", "field" =>"post.title"]],
 ```
 
 If you set the type as money, you should put the numeric field in the field key of array
+
 ##### Example:
+
 ```php
 ['Price' => ["type" => "money", "field" =>"price"]],
 ```
+
 ### search fields
 
-By default the variable controller ```$searchfields``` has the created_at field for search, you can define the next 3 structures for a search field
+By default the variable controller `$searchfields` has the created_at field for search, you can define the next 3 structures for a search field
 
 #### Text
 
 ```php
     "fieldName" =>[
-                "type" => "text" 
+                "type" => "text"
                 "placeholder" => "my search"
             ]
 ```
-where 
-- fieldName: is the column name in your model
-- type: the type of search defined as text
-- placeholder: What to display in the text input
+
+where
+
+-   fieldName: is the column name in your model
+-   type: the type of search defined as text
+-   placeholder: What to display in the text input
 
 #### Date
+
 ```php
     "fieldName" =>[
-                "type" => "singleDate" 
+                "type" => "singleDate"
                 "label" => "my date"
             ]
 ```
-where 
-- fieldName: is the datetime column  name in your model
-- type: the type of date 
-- label: is what the label show aside the input date
+
+where
+
+-   fieldName: is the datetime column name in your model
+-   type: the type of date
+-   label: is what the label show aside the input date
 
 #### Related
 
 This will show a dropdown for a seach of related models
+
 ```php
     "fieldName" => [
-                    "type" => "related", 
-                    "elements" => $models, 
+                    "type" => "related",
+                    "elements" => $models,
                     "modelDisplay" => "name",
                     "label" => "Comments",
-                    "value" => "id" 
+                    "value" => "id"
                 ]
-                
+
 ```
-where 
-- fieldName: the foreign key contained in your current model
-- type: the type of related 
-- elements: the related models for a search, for example if you generate a Invoice quickcrud, and you want to search the invoices related to costumer, you should put here Customer::all()
-- modelDisplay: what field of the related model you want to display
-- label: is what the label show aside the input dropdown
-- value: the related column in the related model search for
+
+where
+
+-   fieldName: the foreign key contained in your current model
+-   type: the type of related
+-   elements: the related models for a search, for example if you generate a Invoice quickcrud, and you want to search the invoices related to costumer, you should put here Customer::all()
+-   modelDisplay: what field of the related model you want to display
+-   label: is what the label show aside the input dropdown
+-   value: the related column in the related model search for
 
 ## Changelog
 
@@ -341,8 +366,8 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- [Diego Lopez](https://github.com/dlogon)
-- [All Contributors](../../contributors)
+-   [Diego Lopez](https://github.com/dlogon)
+-   [All Contributors](../../contributors)
 
 ## License
 
